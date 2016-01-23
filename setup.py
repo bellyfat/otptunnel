@@ -28,7 +28,11 @@ setup(
     author="Robert Graham",
     author_email='rpgraham84@gmail.com',
     url='https://github.com/rpgraham84/otptunnel',
-    pymodules=['otptunnel'],
+    entry_points={
+        'console_scripts': [
+            'otptunnel = otptunnel:main',
+        ],
+    },
     include_package_data=True,
     install_requires=requirements,
     license="MIT",
