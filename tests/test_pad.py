@@ -1,8 +1,9 @@
-import otptunnel
-import unittest
-import tempfile
 import os
+import tempfile
+import unittest
 from textwrap import dedent
+
+import otptunnel
 
 
 class PadTests(unittest.TestCase):
