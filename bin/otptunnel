@@ -1,0 +1,89 @@
+#!/usr/bin/env python
+import otpt
+
+import argparse
+import textwrap
+import sys
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description=textwrap.dedent('''
+            A VPN-like server/client that utilizes a user specified
+            one time pad for the XOR'ing of network traffic over a TAP
+            interface.
+            '''),
+        epilog=textwrap.dedent('''
+        
+            Examples:
+            
+            To start a server listening on default settings,
+
+            otptunnel -s -k ~/random.bin  
+            
+            If that server's IP is 192.168.1.1, and you have the same keyfile
+            in your home directory, you can connect to it using,  
+
+            otptunnel -k ~/random.bin --tap-addr 10.8.0.2/24 --remote-addr 192.168.1.1:12000
+            '''))
+    parser.add_argument('-s', '--server',
+        action="store_true",
+        dest='server',
+        help="set server mode (default: client mode)"
+        )
+    parser.add_argument('-k',
+        dest='keyfile',
+        help='file to be used as key',
+        required=True
+        )
+    parser.add_argument('-T', '--tap-addr',
+        dest='taddr',
+        default='10.8.0.1/24',
+        help='set tunnel IP and mask (default: 10.8.0.1/24)'
+        )
+    parser.add_argument('-L', '--local-addr',
+        dest='laddr',
+        default='0.0.0.0:12000',
+        help='address to which OTPTunnel will bind (default: 0.0.0.0:12000)'
+        )
+    parser.add_argument('-R', '--remote-addr',
+        dest='raddr',
+        help='set remote server IP and port'
+        )
+    parser.add_argument('-m', '--tap-mtu',
+        type=int,
+        dest='tmtu',
+        default=32768,
+        help='set tunnel MTU (default: 32768)'
+        )
+    args = parser.parse_args()
+    
+    # Create the tap
+    tap = pynetlinux.tap.Tap()
+    try:
+        tap.ip, tap.mask = args.taddr.rsplit('/', 1)
+    except ValueError:
+        tap.ip, tap.mask = args.taddr, '24'
+    tap.up()
+    
+    # Create the pad
+    pad = otpt.Pad(args.keyfile)
+    
+    # Create the codec
+    if not args.server:
+        codec = otpt.Client(tap, pad, args.laddr, args.raddr, args.tmtu)
+    else:
+        codec = otpt.Server(tap, pad, args.laddr, args.raddr, args.tmtu)
+    
+    # Run the codec
+    codec.run()
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as e:
+        sys.stderr.write('{}\n'.format(str(e)))
+        sys.exit(1)
+    sys.exit(0)
