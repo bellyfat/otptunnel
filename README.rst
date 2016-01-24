@@ -99,20 +99,20 @@ TODO: (as of 9/13/2013)
 Immediate
 ---------
 
-- Fix server init code so that a remote ip doesn't have to be specified
+ - Fix server init code so that a remote ip doesn't have to be specified
 server-side but can be inferred from successfully reading a control packet.
-- Give server ``OTPTunnel`` a ``clients`` object to track keyfiles and offsets for
+ - Give server ``OTPTunnel`` a ``clients`` object to track keyfiles and offsets for
 clients that it accepts.
-- Make OTP object aware of the last decode offset used during every
+ - Make OTP object aware of the last decode offset used during every
 ``OTP.decode()`` call. This way, the recipient of a packet can reject it if it
 has a lower offset than the most recent one used.
-- Introduce packet padding. At the beginning of every ``OTP.encode()`` call, the
+ - Introduce packet padding. At the beginning of every ``OTP.encode()`` call, the
 first byte at ``OTP._current_encode_seek`` is used as a random number 0-255 that
 will be the number of random bytes of padding prepended to the packet. The
 prepended bytes are taken from /dev/urandom so as to not waste keyfile. This
 is to defend against plaintext correlation based on every encrypted packet
 being predictably longer than it's plaintext counterpart.
-- Introduce a "burning mode" which will write a pseudo-random byte (different
+ - Introduce a "burning mode" which will write a pseudo-random byte (different
 bytes for each user) for every read into the keyfile. This way, even if the
 users attempt to use the same keyfile again, it wont work. Packets will we
 dropped because the client and server will have different bytes in their
