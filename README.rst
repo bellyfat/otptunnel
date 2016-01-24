@@ -2,8 +2,6 @@
 otptunnel
 ===============================
 
-One time encryption pad.
-
 .. image:: https://img.shields.io/pypi/v/otptunnel.svg
         :target: https://pypi.python.org/pypi/otptunnel
 
@@ -14,6 +12,8 @@ One time encryption pad.
         :target: https://readthedocs.org/projects/otptunnel/?badge=latest
         :alt: Documentation Status
 
+
+One time encryption pad.
 
 - Free software: MIT
 - Documentation: https://otptunnel.readthedocs.org.
