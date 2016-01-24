@@ -5,8 +5,8 @@ otptunnel
 .. image:: https://img.shields.io/pypi/v/otptunnel.svg
         :target: https://pypi.python.org/pypi/otptunnel
 
-.. image:: https://img.shields.io/travis/rhgrant10/otptunnel.svg
-        :target: https://travis-ci.org/rhgrant10/otptunnel
+.. image:: https://img.shields.io/travis/rpgraham84/otptunnel.svg
+        :target: https://travis-ci.org/rpgraham84/otptunnel
 
 .. image:: https://readthedocs.org/projects/otptunnel/badge/?version=latest
         :target: https://readthedocs.org/projects/otptunnel/?badge=latest
