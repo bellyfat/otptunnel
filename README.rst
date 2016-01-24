@@ -27,7 +27,7 @@ across a network.
 Installing
 ==========
 
-.. code-block::console
+.. code-block::
 
 	pip install OTPTunnel
 
@@ -47,7 +47,7 @@ changed soon so that the server can host multiple keyfiles and
 effectively serve as a router of a VPN. The server can be initiated as
 so:
 
-.. code-block::console
+.. code-block::
 
     ./otptunnel -S -K keyfile -A 1.2.3.4
 
@@ -57,7 +57,7 @@ future.
 
 The client would then connect:
 
-.. code-block::console
+.. code-block::
 
 	./otptunnel -K keyfile -A 5.6.7.8 --tap-addr 10.8.0.2
 
